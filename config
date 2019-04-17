@@ -47,6 +47,8 @@ client.urgent           $darkred    $darkred    $black      $darkred    $darkred
 client.background $black
 
 # Exec startup programs or sevice
+# i3lock
+exec_always --no-startup-id xautolock -time 10 -locker 'i3lock -i /home/yoshijulas/Downloads/deer-1920x1080-spring-bloom-forest-surreal-hd-13054.png -e -u'
 # Clipboard program KDE
 exec --no-startup-id klipper
 #-KDEconnect
@@ -82,7 +84,7 @@ bindsym $mod+Shift+z exec --no-startup-id xsetroot -solid "#F7A8B8"
 bindsym $mod+Shift+x exec --no-startup-id feh --bg-scale $HOME/Downloads/angel-1920x1080-fairy-girly-dream-hd-16938.jpg
 
 # i3lock
-bindsym $mod+x exec i3lock
+bindsym $mod+x exec i3lock -i /home/yoshijulas/Downloads/deer-1920x1080-spring-bloom-forest-surreal-hd-13054.png -e -u
 
 # change focus
 bindsym $mod+j focus left
