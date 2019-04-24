@@ -55,7 +55,7 @@ font-5 = Font Awesome 5 Brands:pixelsize=8;1
 font-2 = sm4tik:pixelsize=10;1
 
 
-modules-left = i3
+modules-left = i3 xwindow
 ; music
 modules-center =  date weather
 modules-right =    filesystem temperature wireless-network volume battery powermenu
@@ -253,6 +253,27 @@ format-disconnected =
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
 
+[module/xwindow]
+type = internal/xwindow
+
+; Available tags:
+;   <label> (default)
+format = <label>
+;format-background = #f00
+format-foreground = ${colors.foreground}
+format-padding = 4
+
+; Available tokens:
+;   %title%
+; Default: %title%
+label = %title%
+label-maxlen = 75
+
+; Used instead of label when there is no window title
+; Available tokens:
+;   None
+label-empty =
+label-empty-foreground = #707880
 
 [module/date]
 type = internal/date
