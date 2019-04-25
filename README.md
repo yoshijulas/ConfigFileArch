@@ -5,8 +5,8 @@ These are some dependecies.
 Some are missing.
 
 i3-gaps
-Compton
-Polybar
-Uxrvt
-Gvim
+ Compton
+  Polybar
+   Uxrvt
+    Gvim
 
