@@ -167,7 +167,7 @@ format-warn-foreground = #ff0000
 format = <label>
 label = "    %temperature-c%"
 format-warn = <label-warn>
-label-warn = "    %temperature-c% "
+label-warn = "    %temperature-c%"
 
 [module/wireless-speed]
 type = internal/network
@@ -309,12 +309,12 @@ battery = BAT1
 adapter = AC
 full-at = 60
 
-format-full-background = ${colors.background-mod2}
-format-charging-background = ${colors.background-mod1}
-format-charging = "⁣   <animation-charging> <label-charging>"
+format-full-background = ${colors.background-alt}
+format-charging-background = ${colors.background-alt}
+format-charging = "⁣  <animation-charging> <label-charging>"
 format-charging-underline = #ffb52a
 
-format-charging-suffix = "   "
+format-charging-suffix = "  "
 
 format-discharging-background = ${colors.background-alt}
 format-discharging = "⁣  <ramp-capacity> <label-discharging>  "
