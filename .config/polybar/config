@@ -9,7 +9,7 @@ background = #e0343434
 ;it's ARGB so "cfl" is for transparency
 background-alt = #ef242424
 background-unf = #cf484848
-# background-mod0 = #cf000000
+; background-mod0 = #cf000000
 background-mod1 = #cf141414
 background-mod2 = #cf141414
 background-alrt = #cf484848
@@ -46,8 +46,6 @@ module-margin-left = 0
 module-margin-right = 0
 
 font-0 = Hack:style=Bold:size=8;1
-;font-0 = Misc Termsyn:size=8;1
-;font-0 = Ubuntu:size=10;1
 font-1 = FontAwesome:fontformat=truetype:size=12;1
 font-3 = Font Awesome 5 Free:style=Regular:pixelsize=8;1
 font-4 = Font Awesome 5 Free:style=Solid:pixelsize=8;1
@@ -60,8 +58,9 @@ font-2 = sm4tik:pixelsize=10;1
 
 modules-left = i3 xwindow
 ; music
-modules-center =  date weather wireless-speed
-modules-right =    filesystem temperature wireless-network volume battery powermenu
+modules-center = date weather
+;wireless-speed
+modules-right = spotify filesystem temperature wireless-network volume battery powermenu
 
 tray-position = hidden
 tray-padding = 11
@@ -86,6 +85,11 @@ format-suffix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = python ~/.config/polybar/weather.py
 
+[module/spotify]
+type = custom/script
+exec = python ~/.config/polybar/Scripts/spotify.py
+interval = 10
+
 ;[module/music]
 ;type = custom/script
 ;interval = 1
@@ -98,34 +102,48 @@ exec = python ~/.config/polybar/weather.py
 
 ;exec = ~/.config/polybar/mpris.sh
 
-
 [module/i3]
-
 type = internal/i3
-;label-focused-background = ${colors.background-alt}
 label-unfocused-background = ${colors.background-unf}
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;2
+ws-icon-2 = 3;
+ws-icon-3 = 4;4
+ws-icon-4 = 5;5
+ws-icon-5 = 6;6
+ws-icon-6 = 7;
+ws-icon-7 = 8;
+ws-icon-8 = 9;
+ws-icon-9 = 10;10
 
 label-mode = %mode%
 label-mode-padding = 2
 label-mode-background = #e60053
 
-label-focused = %name%
+label-focused = %icon%
 label-focused-foreground = #ffffff
 label-focused-background = ${colors.background-alt}
 label-focused-underline = #fba922
 label-focused-padding = 4
 
-label-unfocused = %name%
+label-unfocused = %icon%
 label-unfocused-padding = 4
 
-label-visible = %name%
+label-visible = %icon%
 label-visible-underline = #555555
 label-visible-padding = 4
 
-label-urgent = %name%
+label-urgent = %icon%
 label-urgent-foreground = #000000
 label-urgent-background = ${colors.background-alrt}
 label-urgent-padding = 4
+
+;[module/spotify]
+;type = custom/spotify
+;exec = ~/.config/polybar/spotify.sh "%artist% - %title%  "
+;tail = true
+;interval = 2
 
 [module/filesystem]
 type = internal/fs
