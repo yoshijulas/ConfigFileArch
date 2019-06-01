@@ -21,23 +21,11 @@ set $height 20
 
 # Colors
 set $darkred     #8b0000
-set $red         #8b0000
-set $darkgreen   #006400
-set $green       #008000
-set $darkyellow  #a57c00
-set $yellow      #FFFF00
-set $darkblue    #00008B
-set $blue        #0000FF
-set $darkmagenta #8B008B
-set $magenta     #FF00FF
-set $darkcyan    #008B8B
 set $cyan        #008B8B
 set $darkwhite   #98968a
 set $white       #FFFFFF
-# Use custom colors for black
 set $black       #282828
 set $darkblack   #1d2021
-#set $transparent #FFFFFF00
 
 #                       BORDER      BACKGROUND  TEXT        INDICATOR   CHILD_BORDER
 client.focused          $black      $black      $darkwhite  $cyan       $darkblack
@@ -47,10 +35,28 @@ client.urgent           $darkred    $darkred    $black      $darkred    $darkred
 client.background $black
 
 # Exec startup programs or sevice
+#----------------------------------->
+# KDEPLASMA IN I3I
+# general application settings
+for_window [window_role="pop-up"] floating enable
+for_window [class="plasmashell"] floating enable
+
+# close plasma desktop windows
+for_window [title="Desktop — Plasma"] kill;
+
+# disable focus
+no_focus [class="plasmashell"]
+no_focus [window_role="pop-up"]
+no_focus [window_type="notification"]
+
+focus_on_window_activation none
+focus_follows_mouse no
+mouse_warping none
+#----------------------------------->
 # polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 # i3lock
-exec_always --no-startup-id xautolock -time 10 -locker 'betterlockscreen -l'
+exec_always --no-startup-id xautolock -time 5 -locker 'betterlockscreen -l'
 # Clipboard program KDE
 exec --no-startup-id klipper
 #-KDEconnect
@@ -178,6 +184,22 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+#Special Workspaces For programs
+for_window [class="Spotify"] move to workspace $ws8
+for_window [class="qBittorrent"] move to workspace $ws7
+assign [class="Steam"] $ws7
+assign [class="Nightly"] $ws3
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
+
+#Special Shortcuts
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -259,22 +281,6 @@ bindsym XF86AudioPrev exec playerctl previous
 #    }
 #}
 #
-# i3exit shutdown
-
-set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (Shift+s) shutdown
-mode "$mode_system" {
-    bindsym l exec --no-startup-id i3exit lock, mode "default"
-    bindsym e exec --no-startup-id i3exit logout, mode "default"
-    bindsym s exec --no-startup-id i3exit suspend, mode "default"
-    bindsym h exec --no-startup-id i3exit hibernate, mode "default"
-    bindsym r exec --no-startup-id i3exit reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id i3exit shutdown, mode "default"
-
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+Shift+p mode "$mode_system"
 
 ######################
 # Bottom of the file #
