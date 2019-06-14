@@ -10,6 +10,6 @@ try:
     artist = metadata['xesam:artist'][0]
     title = metadata['xesam:title']
 
-    print(f" {artist} - {title}  ")
+    print(f"  {artist} - {title}  ")
 except:
     print("")
