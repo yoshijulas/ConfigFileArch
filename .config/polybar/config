@@ -3,15 +3,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;
 
 [colors]
-;background = ${xrdb:color0:#222}
-;background = #212E36
 background = #e0343434
 ;it's ARGB so "cfl" is for transparency
 background-alt = #ef242424
 background-unf = #cf484848
-; background-mod0 = #cf000000
 background-mod1 = #cf141414
-background-mod2 = #cf141414
 background-alrt = #cf484848
 
 ;foreground = ${xrdb:color7:#222}
@@ -19,7 +15,6 @@ foreground = #ffffff
 foreground-alt = #ffffff
 primary = #ffffff
 secondary = #ffffff
-
 
 [bar/Polybar]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -47,20 +42,14 @@ module-margin-right = 0
 
 font-0 = Hack:style=Bold:size=8;1
 font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-3 = Font Awesome 5 Free:style=Regular:pixelsize=8;1
-font-4 = Font Awesome 5 Free:style=Solid:pixelsize=8;1
-font-5 = Font Awesome 5 Brands:pixelsize=8;1
-font-6 = Font Awesome 5 Pro:style=Light:pixelsize=12;1
-font-7 = Font Awesome 5 Pro:style=Solid:pixelsize=12;1
-font-8 = Font Awesome 5 Pro:style=Regular:pixelsize=12;1
-font-2 = sm4tik:pixelsize=10;1
-
+font-2 = "Iosevka Nerd Font:pixelsize=13;3"
 
 modules-left = i3 xwindow
 ; music
 modules-center = date weather
 ;wireless-speed
-modules-right = spotify filesystem temperature wireless-network volume battery powermenu
+modules-right = spotify kdeconnect filesystem temperature wireless-network volume battery
+;powermenu
 
 tray-position = hidden
 tray-padding = 11
@@ -71,7 +60,6 @@ tray-maxsize = 18
 tray-detached = true
 ;tray-background = #0063ff
 
-;wm-restack = bspwm
 wm-restack = i3
 
 [module/weather]
@@ -85,9 +73,19 @@ format-suffix = "   "
 format-prefix-foreground = ${colors.foreground-alt}
 exec = python ~/.config/polybar/weather.py
 
+[module/kdeconnect]
+type = custom/script
+label-active-font = 3
+format-suffix = " "
+format-prefix = "  "
+exec = "~/.config/polybar/polybar-kdeconnect.sh -d"
+tail = true
+format-background = ${colors.background-alt}
+format-foreground = ${colors.foreground-alt}
+
 [module/spotify]
 type = custom/script
-exec = python ~/.config/polybar/Scripts/spotify.py
+exec = python ~/.config/polybar/scripts/spotify.py
 interval = 10
 
 ;[module/music]
@@ -331,7 +329,7 @@ format-full-background = ${colors.background-alt}
 format-charging-background = ${colors.background-alt}
 format-charging = "⁣  <animation-charging> <label-charging>"
 format-charging-underline = #ffb52a
-
+format-prefix = " "
 format-charging-suffix = "  "
 
 format-discharging-background = ${colors.background-alt}
@@ -367,7 +365,7 @@ label-open = "      "
 label-open-background = ${colors.background-mod1}
 label-open-foreground = ${colors.secondary}
 label-close = "    cancel   "
-label-close-background = ${colors.background-mod2}
+label-close-background = ${colors.background-mod1}
 label-close-foreground = ${colors.secondary}
 label-separator = " "
 label-separator-foreground = ${colors.foreground-alt}
