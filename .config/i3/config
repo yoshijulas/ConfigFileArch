@@ -55,8 +55,8 @@ mouse_warping none
 #----------------------------------->
 # polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-# i3lock
-exec_always --no-startup-id xautolock -time 5 -locker 'betterlockscreen -l'
+# lock
+#exec_always --no-startup-id xautolock -time 60 -locker 'betterlockscreen -l'
 # Clipboard program KDE
 exec --no-startup-id klipper
 #-KDEconnect
@@ -66,8 +66,6 @@ exec --no-startup-id indicator-kdeconnect
 #exec --no-startup-id nitrogen --restore
 #-Transparent background color
 exec --no-startup-id compton
-#-Start mpd
-exec --no-startup-id mpd
 # <--Gaps-->
 gaps inner 10
 gaps outer 10
@@ -81,6 +79,9 @@ floating_modifier $mod
 # start a terminal
 set $term urxvt
 bindsym $mod+Shift+t exec $term
+
+# reset wifi connection
+bindsym $mod+Shift+m exec ~/Desktop/reset.sh
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -251,36 +252,6 @@ bindsym XF86AudioPlay exec playerctl play
 bindsym XF86AudioPause exec playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
-
-# Bar
-
-#bar {
- #   verbose yes
-#    status_command i3status
- #   status_command i3blocks
-#    i3bar_command i3bar -t
-#    position top
-#    font pango:'System San Francisco Display Regular' 10
-#    strip_workspace_numbers yes
-#    separator_symbol "■"
-#    bindsym button4 nop
-#    bindsym button5 nop
-#    height $height
-#    set $transparent #00000050
-#    colors {
-#        statusline         $white
-#        background         $transparent
-#        separator          $transparent
-#
-#                          BORDER       BACKGROUND   TEXT
-#        focused_workspace  $transparent $transparent $darkwhite
-#        inactive_workspace $transparent $transparent $white
-#        active_workspace   $transparent $transparent $white
-#        urgent_workspace   $darkred     $darkred     $transparent
-#        binding_mode       $darkred     $darkred     $transparent
-#    }
-#}
-#
 
 ######################
 # Bottom of the file #
