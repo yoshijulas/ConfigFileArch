@@ -13,7 +13,7 @@ COLOR_DISCONNECTED='#5a5959'    # Device Disconnected
 COLOR_NEWDEVICE='#ff0'          # New Device
 COLOR_BATTERY_100='#C0C0C0'     # Battery => 95
 COLOR_BATTERY_ELSE="FFF"        # Battery = (11-94)
-COLOR_BATTERY_LOW='#f00'        # Battery =<  10
+COLOR_BATTERY_LOW='#E50000'        # Battery =<  10
 
 # Icons shown in Polybar
 ICON_SMARTPHONE=' '
@@ -102,8 +102,10 @@ get_icon () {
     DEV_ID=$(echo $device | sed 's/[{"}]//g')
     DEV_BAT="$(qdbus org.kde.kdeconnect /modules/kdeconnect/devices/$DEV_ID org.kde.kdeconnect.device.battery.charge)"
     case $DEV_BAT in
-	1|2|3|4|5|6|7|8|9|10) DEV_BAT="%{F$COLOR_BATTERY_LOW}$DEV_BAT%{F-}" ;;
-	2*|3*|4*|5*|6*|7*|8*|90|91|92|93|94) DEV_BAT="$DEV_BAT%"            ;;
+	1|2|3|4|5|6|7|8|9|10) DEV_BAT="$DEV_BAT%"
+	                      DEV_BAT="%{F$COLOR_BATTERY_LOW}$DEV_BAT%{F-}" ;;
+
+	1*|2*|3*|4*|5*|6*|7*|8*|90|91|92|93|94) DEV_BAT="$DEV_BAT%"            ;;
 	95|96|97|98|99|100) DEV_BAT="$DEV_BAT%"
 			    DEV_BAT="%{F$COLOR_BATTERY_100}$DEV_BAT%{F-}"   ;;
 	*) DEV_BAT="   " ;;
