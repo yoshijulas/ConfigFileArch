@@ -11,17 +11,9 @@ THEME=solarized
 # Color Settings of Icon shown in Polybar
 COLOR_DISCONNECTED='#5a5959'    # Device Disconnected
 COLOR_NEWDEVICE='#ff0'          # New Device
-COLOR_BATTERY_100='#C0C0C0'     # Battery = 100
-#COLOR_BATTERY_80='#fff'         # Battery >= 80
-#ccc
-#COLOR_BATTERY_70='#fff'         # Battery >= 70
-#aaa
-#COLOR_BATTERY_60='#fff'         # Battery >= 60
-#888
-#COLOR_BATTERY_50='#fff'         # Battery >= 50
-#666
-COLOR_BATTERY_LOW='#fff'        # Battery <  50
-#f00
+COLOR_BATTERY_100='#C0C0C0'     # Battery => 95
+COLOR_BATTERY_ELSE="FFF"        # Battery = (11-94)
+COLOR_BATTERY_LOW='#f00'        # Battery =<  10
 
 # Icons shown in Polybar
 ICON_SMARTPHONE=' '
@@ -102,20 +94,18 @@ get_icon () {
     case $1 in
     "-1")   ICON="%{F$COLOR_DISCONNECTED}$icon%{F-}" ;;
     "-2")   ICON="%{F$COLOR_NEWDEVICE}$icon%{F-}" ;;
- #  5*)     ICON="%{F$COLOR_BATTERY_50}$icon%{F-}" ;;
- #  6*)     ICON="%{F$COLOR_BATTERY_60}$icon%{F-}" ;;
- #  7*)     ICON="%{F$COLOR_BATTERY_70}$icon%{F-}" ;;
- #  8*)     ICON="%{F$COLOR_BATTERY_80}$icon%{F-}" ;;
+    1|2|3|4|5|6|7|8|9|10)  ICON="%{F$COLOR_BATTERY_LOW}$icon%{F-}" ;;
     95|96|97|98|99|100)    ICON="%{F$COLOR_BATTERY_100}$icon%{F-}" ;;
-    *)      ICON="%{F$COLOR_BATTERY_LOW}$icon%{F-}" ;;
+    *)      ICON="%{F$COLOR_BATTERY_ELSE}$icon%{F-}" ;;
     esac
     device="$(qdbus --literal org.kde.kdeconnect /modules/kdeconnect org.kde.kdeconnect.daemon.devices)"
     DEV_ID=$(echo $device | sed 's/[{"}]//g')
     DEV_BAT="$(qdbus org.kde.kdeconnect /modules/kdeconnect/devices/$DEV_ID org.kde.kdeconnect.device.battery.charge)"
     case $DEV_BAT in
-	1*|2*|3*|4*|5*|6*|7*|8*|90|91|92|93|94) DEV_BAT="$DEV_BAT%" 	;;
+	1|2|3|4|5|6|7|8|9|10) DEV_BAT="%{F$COLOR_BATTERY_LOW}$DEV_BAT%{F-}" ;;
+	2*|3*|4*|5*|6*|7*|8*|90|91|92|93|94) DEV_BAT="$DEV_BAT%"            ;;
 	95|96|97|98|99|100) DEV_BAT="$DEV_BAT%"
-			    DEV_BAT="%{F$COLOR_BATTERY_100}$DEV_BAT%{F-}" ;;
+			    DEV_BAT="%{F$COLOR_BATTERY_100}$DEV_BAT%{F-}"   ;;
 	*) DEV_BAT="   " ;;
     esac
     echo $ICON $DEV_BAT
