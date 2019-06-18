@@ -66,6 +66,8 @@ exec --no-startup-id indicator-kdeconnect
 #exec --no-startup-id nitrogen --restore
 #-Transparent background color
 exec --no-startup-id compton
+# Notifications (Dunst)
+exec --no-startup-id /usr/bin/dunst
 # <--Gaps-->
 gaps inner 10
 gaps outer 10

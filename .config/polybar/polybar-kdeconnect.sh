@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # CONFIGURATION
 LOCATION=0
 YOFFSET=-405
@@ -9,7 +8,8 @@ WIDTH_WIDE=24
 THEME=solarized
 
 # Color Settings of Icon shown in Polybar
-COLOR_DISCONNECTED='#5a5959'    # Device Disconnected
+COLOR_DISCONNECTED='#a5a5a5'    # Device Disconnected
+#5a5959
 COLOR_NEWDEVICE='#ff0'          # New Device
 COLOR_BATTERY_100='#C0C0C0'     # Battery => 95
 COLOR_BATTERY_ELSE="FFF"        # Battery = (11-94)
@@ -109,6 +109,10 @@ get_icon () {
 	95|96|97|98|99|100) DEV_BAT="$DEV_BAT%"
 			    DEV_BAT="%{F$COLOR_BATTERY_100}$DEV_BAT%{F-}"   ;;
 	*) DEV_BAT="   " ;;
+    esac
+    case $1 in
+	"-1")  DEV_BAT="OFF"
+	       DEV_BAT="%{F$COLOR_DISCONNECTED}$DEV_BAT%{F-}"
     esac
     echo $ICON $DEV_BAT
 }
