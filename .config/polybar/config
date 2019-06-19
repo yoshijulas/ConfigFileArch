@@ -2,15 +2,20 @@
 ; Made By yoshijulas ;
 ;;;;;;;;;;;;;;;;;;;;;;
 
+;---  Colors ---;
+
 [colors]
+;Background Colors
 background = #e0343434
 ;it's ARGB so "cfl" is for transparency
 background-alt = #ef242424
 background-unf = #cf484848
 background-mod1 = #cf141414
 
-;foreground = ${xrdb:color7:#222}
+;Foreground Colors
 foreground = #ffffff
+
+;--- Main Bar Config ---;
 
 [bar/Polybar]
 ;monitor = ${env:MONITOR:HDMI-1}
@@ -36,16 +41,22 @@ padding-right = 0
 module-margin-left = 0
 module-margin-right = 0
 
+;--- Fonts ---;
+
 font-0 = Hack:style=Bold:size=8;1
 font-1 = FontAwesome:fontformat=truetype:size=12;1
 font-2 = "Iosevka Nerd Font:pixelsize=13;3"
 
+;--- Module Setup ---;
+
 modules-left = i3 xwindow
 ; music
 modules-center = date weather
-;wireless-speed
+; wireless-speed
 modules-right = spotify kdeconnect filesystem temperature wireless-network volume battery
-;powermenu
+; powermenu
+
+;---------------------;
 
 tray-position = hidden
 tray-padding = 11
@@ -57,6 +68,8 @@ tray-detached = true
 ;tray-background = #0063ff
 
 wm-restack = i3
+
+;--- Modules ---;
 
 [module/weather]
 type = custom/script
@@ -79,10 +92,18 @@ tail = true
 format-background = ${colors.background-alt}
 format-foreground = ${colors.foreground}
 
+;Spotify Python Version
 [module/spotify]
 type = custom/script
 exec = python ~/.config/polybar/scripts/spotify.py
 interval = 10
+
+;Spotify Shell Script Version
+;[module/spotify]
+;type = custom/spotify
+;exec = ~/.config/polybar/spotify.sh "%artist% - %title%  "
+;tail = true
+;interval = 2
 
 ;[module/music]
 ;type = custom/script
@@ -95,6 +116,8 @@ interval = 10
 ;label = " %output% "
 
 ;exec = ~/.config/polybar/mpris.sh
+
+;--- Workspaces ---;
 
 [module/i3]
 type = internal/i3
@@ -133,11 +156,7 @@ label-urgent-foreground = #000000
 label-urgent-background = ${colors.background-alt}
 label-urgent-padding = 4
 
-;[module/spotify]
-;type = custom/spotify
-;exec = ~/.config/polybar/spotify.sh "%artist% - %title%  "
-;tail = true
-;interval = 2
+;--- Filesystem Space ---;
 
 [module/filesystem]
 type = internal/fs
@@ -155,6 +174,8 @@ format-mounted-foreground = ${colors.foreground}
 
 ;Space%
 label-mounted = "    %percentage_free%% (%free%)"
+
+;--- Temperature ---;
 
 [module/temperature]
 type = internal/temperature
@@ -181,12 +202,16 @@ label = "    %temperature-c% "
 format-warn = <label-warn>
 label-warn = "    %temperature-c% "
 
+;--- Network Speed ---;
+
 [module/wireless-speed]
 type = internal/network
 interface = wlp2s0
 interval = 1.5
 
 label-connected = "D: %downspeed%, U: %upspeed% "
+
+;--- Wireless Network ---;
 
 [module/wireless-network]
 type = internal/network
@@ -213,6 +238,7 @@ ramp-signal-3 = "   "
 ramp-signal-4 = "   "
 ramp-signal-foreground = ${colors.foreground}
 
+;--- Wired Network ---;
 
 [module/wired-network]
 type = internal/network
@@ -229,6 +255,8 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground}
+
+;--- Title Bar Name ---;
 
 [module/xwindow]
 type = internal/xwindow
@@ -252,6 +280,8 @@ label-maxlen = 60
 label-empty =
 label-empty-foreground = #707880
 
+;--- Calendar and Hour ---;
+
 [module/date]
 type = internal/date
 interval = 5
@@ -268,6 +298,8 @@ format-underline = #0a6cf5
 label = %date% %time%
 
 ;lable = %time%
+
+;--- Volume ---;
 
 [module/volume]
 type = internal/pulseaudio
@@ -314,6 +346,7 @@ label-muted = "   mute   "
 ramp-volume-0 = 
 ramp-volume-1 = 
 
+;--- Baterry ---;
 
 [module/battery]
 type = internal/battery
@@ -352,23 +385,24 @@ animation-charging-4 = 
 animation-charging-foreground = ${colors.foreground}
 animation-charging-framerate = 750
 
+;--- PowerMenu (reboot/shutdown/sleep) ---;
+
 [module/powermenu]
 type = custom/menu
 
 format-spacing = 1
-
 label-open = "      "
 label-open-background = ${colors.background-mod1}
-label-open-foreground = ${colors.secondary}
+label-open-foreground = ${colors.foreground}
 label-close = "    cancel   "
 label-close-background = ${colors.background-mod1}
-label-close-foreground = ${colors.secondary}
+label-close-foreground = ${colors.foreground}
 label-separator = " "
 label-separator-foreground = ${colors.foreground}
 
 menu-0-0 = reboot
 menu-0-0-exec = menu-open-1
-menu-0-1 = "power off "
+menu-0-1 = "power off"
 menu-0-1-exec = menu-open-2
 menu-0-2 = "suspend   "
 menu-0-2-exec = menu-open-3
@@ -388,7 +422,6 @@ screenchange-reload = true
 ;compositing-background = screen
 ;compositing-foreground = source
 ;compositing-border = over
-
 
 [global/wm]
 margin-top = 5
