@@ -50,7 +50,7 @@ no_focus [window_role="pop-up"]
 no_focus [window_type="notification"]
 
 focus_on_window_activation none
-focus_follows_mouse yes
+focus_follows_mouse no
 mouse_warping none
 #----------------------------------->
 # polybar
@@ -67,7 +67,7 @@ exec --no-startup-id indicator-kdeconnect
 #-Transparent background color
 exec --no-startup-id compton
 # Notifications (Dunst)
-exec --no-startup-id /usr/bin/dunst
+exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
 # Xdefault config
 exec_always --no-startup-id xrdb ~/.Xdefaults
 # Spotify
