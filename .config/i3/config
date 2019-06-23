@@ -50,7 +50,7 @@ no_focus [window_role="pop-up"]
 no_focus [window_type="notification"]
 
 focus_on_window_activation none
-focus_follows_mouse no
+focus_follows_mouse yes
 mouse_warping none
 #----------------------------------->
 # polybar
@@ -68,9 +68,14 @@ exec --no-startup-id indicator-kdeconnect
 exec --no-startup-id compton
 # Notifications (Dunst)
 exec --no-startup-id /usr/bin/dunst
+# Xdefault config
+exec_always --no-startup-id xrdb ~/.Xdefaults
+# Spotify
+exec spotify
 # <--Gaps-->
 gaps inner 10
-gaps outer 10
+gaps vertical 0
+gaps horizontal 5
 
 # Remove titlebar
 new_window 1pixel
