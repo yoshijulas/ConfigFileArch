@@ -3,7 +3,7 @@
 ##### PROCEED WITH CAUTION! #####
 
 ! special colors
-*.foreground:  #ffc4d6
+*.foreground:  #ffffa2
 *.background:  #7f0002
 *.cursorColor:  #5a0001
 ! black
@@ -35,23 +35,11 @@ URxvt*scrollBar:         false
 URxvt*scrollBar_right:   false
 
 URxvt*transparent:       true
-URxvt*shading:       20
+URxvt*shading:       22
 
-URxvt.font: xft:DejaVu Sans Condensed:pixelsize=13
-URxvt.letterSpace: -4
+URxvt.font: xft:Iosevka Heavy:pixelsize=13
+URxvt.letterSpace: 0
 
 *antialias:  true
 *autohint:   true
 
-! -----------------
-! perl extensions -
-URxvt.perl-ext-common; default,clipboard
-! ,url-select
-! ,keyboard-select
-
-! macros for clipboard and selection
-URxvt.copyCommand:		xclip -i -selection clipboard
-URxvt.pasteCommand:		xclip -o -selection clipboard
-URxvt.keysym.M-c:		perl:clipboard:copy
-URxvt.keysym.M-v:		perl:clipboard:paste
-URxvt.keysys.M-C-v:		perl:clipboard:paste_escaped
