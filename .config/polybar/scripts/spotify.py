@@ -9,7 +9,7 @@ try:
 
     artist = metadata['xesam:artist'][0]
     title = metadata['xesam:title']
-    artisttitle = (f"  {artist} - {title}")[:45]
+    artisttitle = (f" {artist} - {title}")[:150]
     if len(artisttitle) == 45:
         print(artisttitle+"... ")
     else:

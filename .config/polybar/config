@@ -18,11 +18,9 @@ foreground = #ffffff
 ;--- Main Bar Config ---;
 
 [bar/Polybar]
-;monitor = ${env:MONITOR:HDMI-1}
 width = 100%
 height = 30
 offset-x = 0%
-;offset-y = 10%
 radius = 0.0
 fixed-center = true
 
@@ -45,29 +43,45 @@ module-margin-right = 0
 
 font-0 = Hack:style=Bold:size=8;1
 font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+font-2 = Iosevka Nerd Font:pixelsize=13;3
 
 ;--- Module Setup ---;
 
-modules-left = i3 xwindow
-; music
-modules-center = date weather
-; wireless-speed
-modules-right = spotify kdeconnect filesystem temperature wireless-network volume battery
-; powermenu
+modules-left = i3
+modules-center = xwindow
+modules-right = kdeconnect filesystem temperature wireless-network volume battery
 
-;---------------------;
+[bar/PolybarBot]
+width = 100%
+height = 30
+offset-x = 0%
+radius = 0.0
+fixed-center = true
+bottom = true
 
-tray-position = hidden
-tray-padding = 11
-tray-transparent = true
-tray-offset-y = 22
-tray-offset-x = -0
-tray-maxsize = 18
-tray-detached = true
-;tray-background = #0063ff
+background = ${colors.background}
+foreground = ${colors.foreground}
 
-wm-restack = i3
+border-size = 0
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 0
+module-margin-right = 0
+
+;--- Fonts for Bottom Bar ---;
+
+font-0 = Hack:style=Bold:size=8;1
+font-1 = FontAwesome:fontformat=truetype:size=12;1
+font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+
+;--- Module Setup For Bottom Bar ---;
+
+modules-left = Firefox FileManager Whatsapp DuckDuckGo Config
+modules-center = date weather wireless-speed
+modules-right = spotify
 
 ;--- Modules ---;
 
@@ -96,6 +110,7 @@ format-foreground = ${colors.foreground}
 [module/spotify]
 type = custom/script
 exec = python ~/.config/polybar/scripts/spotify.py
+label-padding = 1
 interval = 10
 
 ;Spotify Shell Script Version
@@ -272,7 +287,6 @@ format-padding = 4
 ;   %title%
 ; Default: %title%
 label = %title%
-label-maxlen = 60
 
 ; Used instead of label when there is no window title
 ; Available tokens:
@@ -346,49 +360,50 @@ label-muted = "   mute   "
 ramp-volume-0 = 
 ramp-volume-1 = 
 
-;--- Baterry ---;
+;--- Battery ---;
 
 [module/battery]
 type = internal/battery
 battery = BAT1
-adapter = AC
-full-at = 60
+adapter = ACAD
+full-at = 57
 
-format-full-background = ${colors.background-alt}
+format-charging = "<animation-charging><label-charging>"
+format-charging-foreground = ${colors.foreground}
 format-charging-background = ${colors.background-alt}
-format-charging = "⁣  <animation-charging> <label-charging>"
-format-charging-underline = #ffb52a
-format-prefix = " "
-format-charging-suffix = "  "
+format-charging-padding = 2
 
+format-discharging = "<ramp-capacity><label-discharging>"
+format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background-alt}
-format-discharging = "⁣  <ramp-capacity> <label-discharging>  "
-format-discharging-underline = ${self.format-charging-underline}
+format-discharging-padding = 2
 
-format-full =
-format-full-prefix-foreground = ${colors.foreground}
-format-full-underline = ${self.format-charging-underline}
+format-full =  <label-full>
+format-full-foreground = ${colors.foreground}
+format-full-background = ${colors.background-alt}
+format-full-padding = 2
 
-ramp-capacity-0 = 
-ramp-capacity-1 = 
-ramp-capacity-2 = 
-ramp-capacity-3 = 
-ramp-capacity-4 = 
+label-charging = %percentage%%
+label-discharging = %percentage%%
+label-full = Full
 
-ramp-capacity-foreground = ${colors.foreground}
+ramp-capacity-0 = " "
+ramp-capacity-1 = " "
+ramp-capacity-2 = " "
+ramp-capacity-3 = " "
+ramp-capacity-4 = " "
 
-animation-charging-0 = 
-animation-charging-1 = 
-animation-charging-2 = 
-animation-charging-3 = 
-animation-charging-4 = 
-animation-charging-foreground = ${colors.foreground}
+animation-charging-0 = " "
+animation-charging-1 = " "
+animation-charging-2 = " "
+animation-charging-3 = " "
+animation-charging-4 = " "
 animation-charging-framerate = 750
 
 ;--- PowerMenu (reboot/shutdown/sleep) ---;
 
 [module/powermenu]
-type = custom/menu
+;type = custom/menu
 
 format-spacing = 1
 label-open = "      "
@@ -415,6 +430,48 @@ menu-2-0-exec = shutdown 0
 
 menu-3-0 = "suspend   "
 menu-3-0-exec = systemctl suspend
+
+;--- Menu Apps ---;
+
+[module/Firefox]
+type = custom/text
+content = 
+content-padding = 2
+click-left = firefox-nightly &
+content-background = ${colors.background-alt}
+
+[module/FileManager]
+type = custom/text
+content = 
+content-padding = 2
+content-marging = 2
+click-left = dde-file-manager &
+click-right = /usr/bin/dolphin &
+content-background = ${colors.background-alt}
+
+[module/Whatsapp]
+type = custom/text
+content = 
+content-padding = 2
+click-left = firefox-nightly web.whatsapp.com &
+content-background = ${colors.background-alt}
+
+[module/DuckDuckGo]
+type = custom/text
+content = 
+content-padding = 2
+click-left = firefox-nightly duckduckgo.com &
+content-background = ${colors.background-alt}
+
+[module/Config]
+type = custom/text
+content = 
+content-padding = 2
+click-left = urxvt -e vim ~/.config/i3/config &
+click-right = urxvt -e vim ~/.config/polybar/config &
+content-background = ${colors.background-alt}
+
+;---           ---;
 
 [settings]
 screenchange-reload = true
