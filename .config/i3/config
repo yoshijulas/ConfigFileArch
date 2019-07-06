@@ -67,11 +67,13 @@ exec --no-startup-id indicator-kdeconnect
 #-Transparent background color
 exec --no-startup-id compton
 # Notifications (Dunst)
-exec --no-startup-id dunst -config ~/.config/dunst/dunstrc
+exec --no-startup-id /usr/bin/dunst -config ~/.config/dunst/dunstrc
 # Xdefault config
 exec_always --no-startup-id xrdb ~/.Xdefaults
 # Spotify
 exec spotify
+# Res 1920x1080
+exec --no-startup-id xrandr -s 1920x1080
 # <--Gaps-->
 gaps inner 10
 gaps vertical 0
@@ -84,7 +86,7 @@ new_window 1pixel
 floating_modifier $mod
 
 # start a terminal
-set $term urxvt
+set $term alacritty
 bindsym $mod+Shift+t exec $term
 
 # reset wifi connection
@@ -190,9 +192,14 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 
 #Special Workspaces For programs
 for_window [class="Spotify"] move to workspace $ws8
-for_window [class="qBittorrent"] move to workspace $ws7
+for_window [class="qBittorrent"] move to workspace $ws9
 assign [class="Steam"] $ws7
 assign [class="Nightly"] $ws3
+for_window [title=".*\(Private Browsing\).*"] move to workspace $ws10
+for_window [title=".*(?i)whatsapp.*"] move to workspace $ws4
+#assign [class="Lutris"] $ws2
+#for_window [title=".*(?i)league.*"] move to workspace $ws4
+#assign [class="Wine"] $ws4
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="bubble"] floating enable
