@@ -19,7 +19,7 @@ foreground = #ffffff
 [bar/Polybar]
 width = 100%
 height = 30
-fixed-center = true
+fixed-center = false
 background = ${colors.background}
 foreground = ${colors.foreground}
 
@@ -33,7 +33,7 @@ font-2 = Iosevka Nerd Font:pixelsize=13;3
 
 modules-left = i3
 modules-center = xwindow
-modules-right = WhatsAppNotif kdeconnect filesystem temperature wireless-network volume battery
+modules-right = WhatsAppNotif kdeconnect filesystem temperature wired-network wireless-network volume battery
 
 ;-------------;
 
@@ -55,8 +55,51 @@ font-2 = "Iosevka Nerd Font:pixelsize=13;3"
 
 ;--- Module Setup For Bottom Bar ---;
 
-modules-left = Firefox FileManager Whatsapp DuckDuckGo Config
-modules-center = date weather wireless-speed
+modules-left = Firefox FileManager Whatsapp DuckDuckGo Config Games ServerBattery
+modules-center = date weather wireless-speed ethernet-speed
+modules-right = spotify
+
+;--- Small Bar Config ---;
+
+[bar/PolybarSmall]
+width = 100%
+height = 30
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+;--- Font For Small Bar ---;
+
+font-0 = Hack:style=Bold:size=8;1
+font-1 = FontAwesome:fontformat=truetype:size=12;1
+font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+
+;--- Module Setup For Small Bar ---;
+
+modules-left = i3
+modules-center = xwindow-small
+modules-right = WhatsAppNotif kdeconnect temperature wireless-network volume battery
+
+;--- Small Bottom Bar ---;
+
+[bar/PolybarBotSmall]
+width = 100%
+height = 30
+fixed-center = true
+bottom = true
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+;--- Font For Small Bottom Bar ---;
+
+font-0 = Hack:style=Bold:size=8;1
+font-1 = FontAwesome:fontformat=truetype:size=12;1
+font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+
+;--- Modules Setup For Small Bottom Bar ---;
+
+modules-left = Firefox FileManager Whatsapp DuckDuckGo Config Games
+modules-center = date
 modules-right = spotify
 
 ;---------------;
@@ -120,7 +163,7 @@ label-unfocused-background = ${colors.background-unf}
 ws-icon-0 = 1;
 ws-icon-1 = 2;2
 ws-icon-2 = 3;
-ws-icon-3 = 4;4
+ws-icon-3 = 4;
 ws-icon-4 = 5;5
 ws-icon-5 = 6;6
 ws-icon-6 = 7;
@@ -155,14 +198,17 @@ type = internal/fs
 
 ;Mountpoints to display
 mount-0 = /
+mount-1 = /home
 ;Seconds between update (30 default)
 interval = 10
 
 format-mounted-foreground = ${colors.foreground}
 format-mounted-background = ${colors.background-alt}
 
-label-mounted = "  %percentage_free%% (%free%)"
+label-mounted = " %mountpoint% (%free%)"
+#label-mounted = "  %percentage_free%% (%free%)"
 label-mounted-padding = 2
+spacing = 0
 
 ;--- Temperature ---;
 
@@ -191,6 +237,16 @@ label-padding = 2
 format-warn = <label-warn>
 label-warn = " %temperature-c%"
 label-warn-padding = 2
+
+;--- Network Speed Ethernet---;
+
+[module/ethernet-speed]
+type = internal/network
+interface = enp3s0
+interval = .5
+
+label-connected = "D: %downspeed%, U: %upspeed%"
+label-connected-padding = 2
 
 ;--- Network Speed ---;
 
@@ -232,9 +288,9 @@ type = internal/network
 interface = enp3s0
 interval = 5
 
-format-connected-prefix = ""
 format-connected-padding = 2
-label-connected = %local_ip%
+label-connected = " %local_ip%"
+format-connected-background = ${colors.background-alt}
 
 format-disconnected =
 
@@ -248,6 +304,17 @@ format-foreground = ${colors.foreground}
 format-padding = 2
 
 label = %title%
+label-empty =
+
+[module/xwindow-small]
+type = internal/xwindow
+
+format = <label>
+format-foreground = ${colors.foreground}
+format-padding = 2
+
+label = %title%
+label-maxlen = 40
 label-empty =
 
 ;--- Calendar and Hour ---;
@@ -287,6 +354,7 @@ ramp-volume-1 = 
 
 [module/battery]
 type = internal/battery
+; Use "ls -1 /sys/class/power_supply/
 battery = BAT1
 adapter = ACAD
 full-at = 55
@@ -322,6 +390,16 @@ animation-charging-2 = ""
 animation-charging-3 = ""
 animation-charging-4 = ""
 animation-charging-framerate = 750
+
+;--- ServerBattery ---;
+
+[module/ServerBattery]
+type = custom/script
+exec = "~/.config/polybar/scripts/serverbattery.sh"
+format-foreground = ${colors.foreground}
+format-background = ${colors.background-alt}
+format-padding = 2
+interval = 1
 
 ;--- PowerMenu (reboot/shutdown/sleep) ---;
 
@@ -370,7 +448,7 @@ type = custom/text
 content = 
 content-padding = 2
 content-marging = 2
-click-left = dde-file-manager &
+click-left = dde-file-manager
 click-right = /usr/bin/dolphin &
 content-background = ${colors.background-alt}
 
@@ -385,20 +463,20 @@ content-background = ${colors.background-alt}
 
 [module/DuckDuckGo]
 type = custom/text
-content = 
+content =  
 content-padding = 2
-click-left = firefox-nightly duckduckgo.com &
+click-left = firefox-nightly reddit.com &
 click-middle = firefox-nightly instagram.com &
-click-right = firefox-nightly reddit.com &
+click-right = firefox-nightly duckduckgo.com &
 content-background = ${colors.background-alt}
 
 [module/Config]
 type = custom/text
 content = 
 content-padding = 2
-click-left = alacritty -e vim ~/.config/i3/config &
+click-left = alacritty -e nvim ~/.config/i3/config
 click-middle = systemsettings5 &
-click-right = alacritty -e vim ~/.config/polybar/config &
+click-right = alacritty -e nvim ~/.config/polybar/config
 content-background = ${colors.background-alt}
 
 [module/Games]
