@@ -12,7 +12,7 @@ COLOR_DISCONNECTED='#a5a5a5'    # Device Disconnected
 #5a5959
 COLOR_NEWDEVICE='#ff0'          # New Device
 COLOR_BATTERY_100='#009900'     # Battery = 100
-COLOR_BATTERY_ELSE="FFF"        # Battery = (11-94)
+COLOR_BATTERY_ELSE="#FFF"       # Battery = (11-94)
 COLOR_BATTERY_LOW='#E50000'     # Battery =<  10
 
 # Icons shown in Polybar
