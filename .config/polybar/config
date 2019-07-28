@@ -399,7 +399,7 @@ exec = "~/.config/polybar/scripts/serverbattery.sh"
 format-foreground = ${colors.foreground}
 format-background = ${colors.background-alt}
 format-padding = 2
-interval = 1
+interval = 30
 
 ;--- PowerMenu (reboot/shutdown/sleep) ---;
 
