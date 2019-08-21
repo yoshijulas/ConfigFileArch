@@ -1,22 +1,27 @@
 #!/usr/bin/env bash
+
 # CONFIGURATION
 LOCATION=0
-YOFFSET=-405
-XOFFSET=400
+YOFFSET=-438
+XOFFSET=290
 WIDTH=12
 WIDTH_WIDE=24
+#LOCATION=0
+#YOFFSET=0
+#XOFFSET=0
+#WIDTH=12
+#WIDTH_WIDE=24
 THEME=solarized
 
 # Color Settings of Icon shown in Polybar
-COLOR_DISCONNECTED='#a5a5a5'    # Device Disconnected
-#5a5959
+COLOR_DISCONNECTED='#a5a5a5'       # Device Disconnected
 COLOR_NEWDEVICE='#ff0'          # New Device
-COLOR_BATTERY_100='#009900'     # Battery = 100
-COLOR_BATTERY_ELSE="#FFF"       # Battery = (11-94)
-COLOR_BATTERY_LOW='#E50000'     # Battery =<  10
+COLOR_BATTERY_95='#090'         # Battery >= 95
+COLOR_BATTERY_ELSE='#fff'	# battery == 11-94
+COLOR_BATTERY_LOW='#e50000'        # Battery <= 10
 
 # Icons shown in Polybar
-ICON_SMARTPHONE=' '
+ICON_SMARTPHONE=''
 ICON_TABLET=''
 SEPERATOR='|'
 
@@ -35,7 +40,8 @@ show_devices (){
         then
             battery="$(qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$deviceid" org.kde.kdeconnect.device.battery.charge)"
             icon=$(get_icon "$battery" "$devicetype")
-            devices+="%{A1:$DIR/polybar-kdeconnect.sh -n '$devicename' -i $deviceid -b $battery -m:}$icon%{A}$SEPERATOR"
+	    battery_color=$(get_battery "$battery")
+            devices+="%{A1:$DIR/polybar-kdeconnect.sh -n '$devicename' -i $deviceid -b $battery -m:}$icon $battery_color%{A}$SEPERATOR"
         elif [ "$isreach" = "false" ] && [ "$istrust" = "true" ]
         then
             devices+="$(get_icon -1 "$devicetype")$SEPERATOR"
@@ -54,10 +60,10 @@ show_devices (){
 }
 
 show_menu () {
-    menu="$(rofi -sep "|" -dmenu -i -p "$DEV_NAME" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -width $WIDTH -hide-scrollbar -line-padding 4 -padding 20 -lines 5 -drun-icon-theme<<< "Battery: $DEV_BATTERY%|Ping|Send File|Browse Files|Unpair")"
+    menu="$(rofi -sep "|" -dmenu -i -p "$DEV_NAME" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -theme $THEME -width $WIDTH -hide-scrollbar -line-padding 4 -padding 20 -lines 5 <<< "Battery: $DEV_BATTERY%|Ping|Send File|Browse Files|Unpair")"
                 case "$menu" in
                     *Ping) qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID/ping" org.kde.kdeconnect.device.ping.sendPing ;;
-                   # *'Find Device') qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID/findmyphone" org.kde.kdeconnect.device.findmyphone.ring ;;
+#                    *'Find Device') qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID/findmyphone" org.kde.kdeconnect.device.findmyphone.ring ;;
                     *'Send File') qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID/share" org.kde.kdeconnect.device.share.shareUrl "file://$(zenity --file-selection)" ;;
                     *'Browse Files')
                         if "$(qdbus --literal org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID/sftp" org.kde.kdeconnect.device.sftp.isMounted)" == "false"; then
@@ -70,14 +76,14 @@ show_menu () {
 }
 
 show_pmenu () {
-    menu="$(rofi -sep "|" -dmenu -i -p "$DEV_NAME" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -width $WIDTH -hide-scrollbar -line-padding 1 -padding 20 -lines 1 -drun-icon-theme<<<"Pair Device")"
+    menu="$(rofi -sep "|" -dmenu -i -p "$DEV_NAME" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -theme $THEME -width $WIDTH -hide-scrollbar -line-padding 1 -padding 20 -lines 1<<<"Pair Device")"
                 case "$menu" in
                     *'Pair Device') qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$DEV_ID" org.kde.kdeconnect.device.requestPair
                 esac
 }
 
 show_pmenu2 () {
-    menu="$(rofi -sep "|" -dmenu -i -p "$1 has sent a pairing request" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -width $WIDTH_WIDE -hide-scrollbar -line-padding 4 -padding 20 -lines 2 -drun-icon-theme <<< "Accept|Reject")"
+    menu="$(rofi -sep "|" -dmenu -i -p "$1 has sent a pairing request" -location $LOCATION -yoffset $YOFFSET -xoffset $XOFFSET -theme $THEME -width $WIDTH_WIDE -hide-scrollbar -line-padding 4 -padding 20 -lines 2 <<< "Accept|Reject")"
                 case "$menu" in
                     *'Accept') qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$2" org.kde.kdeconnect.device.acceptPairing ;;
                     *) qdbus org.kde.kdeconnect "/modules/kdeconnect/devices/$2" org.kde.kdeconnect.device.rejectPairing
@@ -92,28 +98,23 @@ get_icon () {
         icon=$ICON_SMARTPHONE
     fi
     case $1 in
-    "-1")   ICON="%{F$COLOR_DISCONNECTED}$icon%{F-}" ;;
-    "-2")   ICON="%{F$COLOR_NEWDEVICE}$icon%{F-}" ;;
-    1|2|3|4|5|6|7|8|9|10)  ICON="%{F$COLOR_BATTERY_LOW}$icon%{F-}" ;;
-    100)    ICON="%{F$COLOR_BATTERY_100}$icon%{F-}" ;;
-    *)      ICON="%{F$COLOR_BATTERY_ELSE}$icon%{F-}" ;;
+    "-1")			ICON="%{F$COLOR_DISCONNECTED}$icon%{F-}" ;;
+    "-2")     			ICON="%{F$COLOR_NEWDEVICE}$icon%{F-}" ;;
+    95|96|97|98|99|100)    	ICON="%{F$COLOR_BATTERY_95}$icon%{F-}" ;;
+    1|2|3|4|5|6|7|8|9|10) 	ICON="%{F$COLOR_BATTERY_LOW}$icon%{F-}" ;;
+    1*|2*|3*|4*|5*|6*|7*|8*|9*) ICON="%{F$COLOR_BATTERY_ELSE}$icon%{F-}" ;;
     esac
-    device="$(qdbus --literal org.kde.kdeconnect /modules/kdeconnect org.kde.kdeconnect.daemon.devices)"
-    DEV_ID=$(echo $device | sed 's/[{"}]//g')
-    DEV_BAT="$(qdbus org.kde.kdeconnect /modules/kdeconnect/devices/$DEV_ID org.kde.kdeconnect.device.battery.charge)"
-    case $DEV_BAT in
-	1|2|3|4|5|6|7|8|9|10) DEV_BAT="$DEV_BAT%"
-	                      DEV_BAT="%{F$COLOR_BATTERY_LOW}$DEV_BAT%{F-}" ;;
-        100) DEV_BAT="$DEV_BAT%"
-	     DEV_BAT="%{F$COLOR_BATTERY_100}$DEV_BAT%{F-}"             ;;
-	1*|2*|3*|4*|5*|6*|7*|8*|9*) DEV_BAT="$DEV_BAT%"            ;;
-	*) DEV_BAT="   " ;;
-    esac
-    case $1 in
-	"-1")  DEV_BAT="OFF"
-	       DEV_BAT="%{F$COLOR_DISCONNECTED}$DEV_BAT%{F-}"
-    esac
-    echo $ICON $DEV_BAT
+    echo $ICON
+}
+
+get_battery () {
+	case $1 in
+	95|96|97|98|99|100) 		BATTERY_COLOR="%{F$COLOR_BATTERY_95}$battery%%{F-}" ;;
+	1|2|3|4|5|6|7|8|9|10) 		BATTERY_COLOR="%{F$COLOR_BATTERY_LOW}$battery%%{F-}" ;;
+	1*|2*|3*|4*|5*|6*|7*|8*|9*)	BATTERY_COLOR="%{F$COLOR_BATTERY_ELSE}$battery%%{F-}" ;;
+	*)				BATTERY_COLOR="OFF";;
+	esac
+	echo $BATTERY_COLOR
 }
 
 unset DEV_ID DEV_NAME DEV_BATTERY
