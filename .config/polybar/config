@@ -144,6 +144,9 @@ format-background = ${colors.background-alt}
 type = custom/script
 exec = python ~/.config/polybar/scripts/spotify.py
 label-padding = 1
+click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause"
+double-click-left = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next"
+click-right = "dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous"
 interval = 2
 
 ;--- Spotify Shell Script Version ---;
@@ -245,7 +248,7 @@ type = internal/network
 interface = enp3s0
 interval = .5
 
-label-connected = "D: %downspeed%, U: %upspeed%"
+label-connected = "W: %upspeed%, R: %downspeed%"
 label-connected-padding = 2
 
 ;--- Network Speed ---;
@@ -304,7 +307,8 @@ format-foreground = ${colors.foreground}
 format-padding = 2
 
 label = %title%
-label-empty =
+label-maxlen = 100
+label-empty = " "
 
 [module/xwindow-small]
 type = internal/xwindow
@@ -474,9 +478,9 @@ content-background = ${colors.background-alt}
 type = custom/text
 content = 
 content-padding = 2
-click-left = alacritty -e nvim ~/.config/i3/config
+click-left = kitty -e nvim ~/.config/i3/config
 click-middle = systemsettings5 &
-click-right = alacritty -e nvim ~/.config/polybar/config
+click-right = kitty -e nvim ~/.config/polybar/config
 content-background = ${colors.background-alt}
 
 [module/Games]
