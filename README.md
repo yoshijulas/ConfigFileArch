@@ -18,5 +18,5 @@ Betterlockscreen
 
 KDE Plasma ##If you want it as DE with i3 WM
 
-![Screenshot_20190618_185147](https://user-images.githubusercontent.com/23490061/59727173-35aea400-91fa-11e9-9b23-5e9092ef1913.png)
-![Screenshot_20190618_185140](https://user-images.githubusercontent.com/23490061/59727172-35aea400-91fa-11e9-9ceb-b959cfef3d08.png)
+![Screenshot_20190830_191439](https://user-images.githubusercontent.com/23490061/64056690-d73b6580-cb5a-11e9-94de-973d2d49b123.png)
+![Screenshot_20190830_191605](https://user-images.githubusercontent.com/23490061/64056689-d6a2cf00-cb5a-11e9-9a6f-8a20841fdb93.png)
