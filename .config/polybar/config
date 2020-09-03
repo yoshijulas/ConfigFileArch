@@ -25,15 +25,13 @@ foreground = ${colors.foreground}
 
 ;--- Fonts ---;
 
-font-0 = Hack:style=Bold:size=8;1
-font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = Iosevka Nerd Font:pixelsize=13;3
+font-0 = Hack Nerd Font:style=Bold:size=9;1
 
 ;--- Module Setup ---;
 
 modules-left = i3
 modules-center = xwindow
-modules-right = WhatsAppNotif kdeconnect filesystem temperature wired-network wireless-network volume battery
+modules-right = WhatsAppNotif kdeconnect filesystem cpu temperature wired-network wireless-network volume battery
 
 ;-------------;
 
@@ -49,15 +47,14 @@ foreground = ${colors.foreground}
 
 ;--- Fonts for Bottom Bar ---;
 
-font-0 = Hack:style=Bold:size=8;1
-font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+font-0 = Hack Nerd Font:style=Bold:size=10;3 
 
 ;--- Module Setup For Bottom Bar ---;
 
 modules-left = Firefox FileManager Whatsapp DuckDuckGo Config Games ServerBattery
 modules-center = date weather wireless-speed ethernet-speed
-modules-right = spotify
+modules-right = 
+;spotify
 
 ;--- Small Bar Config ---;
 
@@ -70,9 +67,7 @@ foreground = ${colors.foreground}
 
 ;--- Font For Small Bar ---;
 
-font-0 = Hack:style=Bold:size=8;1
-font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+font-0 = Hack Nerd font:style=Bold:size=9;1
 
 ;--- Module Setup For Small Bar ---;
 
@@ -92,15 +87,14 @@ foreground = ${colors.foreground}
 
 ;--- Font For Small Bottom Bar ---;
 
-font-0 = Hack:style=Bold:size=8;1
-font-1 = FontAwesome:fontformat=truetype:size=12;1
-font-2 = "Iosevka Nerd Font:pixelsize=13;3"
+font-0 = Hack Nerd Font:style=Bold:size=9;1
 
 ;--- Modules Setup For Small Bottom Bar ---;
 
 modules-left = Firefox FileManager Whatsapp DuckDuckGo Config Games
 modules-center = date
-modules-right = spotify
+modules-right = 
+;spotify
 
 ;---------------;
 
@@ -213,6 +207,20 @@ label-mounted = " %mountpoint% (%free%)"
 label-mounted-padding = 2
 spacing = 0
 
+;--- CPU ---;
+[module/cpu]
+type = internal/cpu
+
+;seconds between update (1 default)
+interval = 0.5
+
+format-background = ${colors.background-alt}
+format-foreground = ${colors.foreground}
+
+format = <label>
+label = CPU %percentage%%
+label-padding = 2
+
 ;--- Temperature ---;
 
 [module/temperature]
@@ -225,7 +233,7 @@ interval = 0.5
 thermal-zone = 0
 
 ;Full path fo temperature sysfs path (/sys/class/thermal/thermal_zone0/temp)
-hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon1/temp1_input
+hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon3/temp1_input
 
 warn-temperature = 86
 
@@ -373,7 +381,7 @@ format-discharging-foreground = ${colors.foreground}
 format-discharging-background = ${colors.background-alt}
 format-discharging-padding = 2
 
-format-full =  <label-full>
+format-full = "  <label-full>"
 format-full-foreground = ${colors.foreground}
 format-full-background = ${colors.background-alt}
 format-full-padding = 2
